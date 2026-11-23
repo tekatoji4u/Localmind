@@ -1,0 +1,15 @@
+{
+  "name": "LocaMind – Tra cứu khóm/ấp Bạc Liêu (cũ) 2026",
+  "short_name": "LocaMind",
+  "description": "Tra cứu nhanh tên ấp/khóm cũ → mới sau sắp xếp năm 2026 trên địa bàn tỉnh Bạc Liêu (cũ).",
+  "lang": "vi",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#003a61",
+  "theme_color": "#003a61",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
