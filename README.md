@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://tekatoji4u.github.io/Localmind/"><b>👉 Dùng ngay trên trình duyệt</b></a>
+  <a href="https://locamind.vercel.app"><b>👉 Dùng ngay: locamind.vercel.app</b></a>
   &nbsp;·&nbsp; Phiên bản <b>2.1</b> &nbsp;·&nbsp; Design by <b>Hải Đăng</b>
 </p>
 
@@ -26,7 +26,8 @@
 - **Trợ lý LocaMind**: hỏi bằng câu tự nhiên, ví dụ *“ấp 3 Gành Hào giờ là gì?”*.
 - **Lọc theo xã/phường**, thống kê nhanh số đơn vị, số dòng dữ liệu.
 - **Tiện ích**: sao chép từng dòng, in danh sách, xuất Excel (.xlsx), nhập Excel/CSV để cập nhật dữ liệu, tải về bản HTML mới.
-- **Giao diện sáng/tối**, hiển thị tốt trên điện thoại, **lưu ra màn hình chính** như một ứng dụng (có icon riêng).
+- **Công tắc sáng/tối kiểu iOS**, tự nhớ lựa chọn; lần đầu mở sẽ theo chế độ của máy.
+- **Tự co giãn theo màn hình** điện thoại, máy tính bảng, máy tính; **lưu ra màn hình chính** như một ứng dụng (có icon riêng).
 - **Offline 100%**: không dùng thư viện, font hay CDN bên ngoài.
 
 ## Hình ảnh giao diện
@@ -54,7 +55,7 @@
 
 ## Cách sử dụng
 
-**Trên trình duyệt:** mở [trang web](https://tekatoji4u.github.io/Localmind/) và gõ tên ấp/khóm vào ô tìm kiếm.
+**Trên trình duyệt:** mở [locamind.vercel.app](https://locamind.vercel.app) và gõ tên ấp/khóm vào ô tìm kiếm.
 
 **Lưu ra màn hình điện thoại:**
 - *iPhone (Safari):* bấm nút **Chia sẻ** → **Thêm vào MH chính**.
