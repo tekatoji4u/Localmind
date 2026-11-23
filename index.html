@@ -48,15 +48,7 @@
     -webkit-font-smoothing:antialiased;
     transition:background .2s ease, color .2s ease;
   }
-  body.device-mobile-active{background:#d9e0e5;}
-  [data-theme="dark"] body.device-mobile-active{background:#03090f;}
-
   #appFrame{width:100%; transition:all .25s ease;}
-  #appFrame.device-mobile{
-    max-width:430px; margin:26px auto; border:10px solid #15202b;
-    border-radius:42px; overflow:hidden; max-height:880px; overflow-y:auto;
-    box-shadow:0 30px 60px -18px rgba(0,0,0,.5);
-  }
 
   .topbar{
     display:flex; align-items:center; justify-content:space-between;
@@ -69,13 +61,28 @@
   .topbar-right{display:flex; align-items:center; gap:8px; flex-shrink:0;}
   .version-badge{display:flex; flex-direction:column; align-items:flex-end; line-height:1.2; font-size:11px; color:var(--ink-soft); margin-right:2px;}
   .version-badge b{color:var(--vtb-red); font-size:12.5px; font-weight:800;}
-  .icon-btn{
-    width:34px; height:34px; border-radius:10px; border:1px solid var(--line);
-    background:var(--surface-soft); color:var(--ink); display:flex; align-items:center; justify-content:center;
-    cursor:pointer; transition:all .15s ease; flex-shrink:0;
+  /* Công tắc sáng/tối kiểu iOS */
+  .ios-switch{
+    position:relative; width:51px; height:31px; padding:0; border:none; border-radius:31px;
+    background:#e9e9eb; cursor:pointer; flex-shrink:0; transition:background .25s ease;
+    -webkit-tap-highlight-color:transparent;
   }
-  .icon-btn:hover{border-color:var(--vtb-blue); color:var(--vtb-blue);}
-  .icon-btn svg{width:17px; height:17px;}
+  .ios-switch[aria-checked="true"]{background:#34c759;}
+  .ios-switch:focus-visible{outline:2px solid var(--vtb-blue-light); outline-offset:2px;}
+  .ios-switch .knob{
+    position:absolute; top:2px; left:2px; width:27px; height:27px; border-radius:27px; background:#fff;
+    box-shadow:0 3px 8px rgba(0,0,0,.15), 0 3px 1px rgba(0,0,0,.06);
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .3s cubic-bezier(.3,1.4,.5,1), width .2s ease;
+  }
+  .ios-switch:active .knob{width:33px;}
+  .ios-switch[aria-checked="true"] .knob{transform:translateX(20px);}
+  .ios-switch[aria-checked="true"]:active .knob{transform:translateX(14px);}
+  .ios-switch .knob svg{width:15px; height:15px;}
+  .ios-switch .ico-sun{color:#f5a300;}
+  .ios-switch .ico-moon{color:#1c3d5a; display:none;}
+  .ios-switch[aria-checked="true"] .ico-sun{display:none;}
+  .ios-switch[aria-checked="true"] .ico-moon{display:block;}
 
   .bg-texture{
     position:fixed; inset:0; z-index:-1;
@@ -224,7 +231,8 @@
     .row{grid-template-columns: 1fr 22px 1fr; padding:12px;}
     .arrow{width:22px; height:22px;}
     .arrow svg{width:11px; height:11px;}
-    .topbar-left .brandname{display:none;}
+    .topbar{flex-wrap:nowrap; padding:10px 14px;}
+    .topbar-left{flex:1 1 auto;}
   }
 
   /* --- LocaMind quick-lookup chat widget --- */
@@ -365,7 +373,6 @@
     *{transition:none !important;}
     body{background:#fff !important; color:#000;}
     .hero-inner{max-width:none; margin:0;}
-    #appFrame.device-mobile{max-width:none; max-height:none; overflow:visible; border:none; margin:0; box-shadow:none;}
     header.hero{background:none; color:#000; padding:0 0 6px; overflow:visible;}
     header.hero::before, header.hero::after{display:none;}
     h1.title{font-size:17px; color:#000; margin:0 0 4px;}
@@ -395,8 +402,12 @@
     </div>
     <div class="topbar-right">
       <span class="version-badge">Phiên bản <b>2.1</b><span>by Hải Đăng</span></span>
-      <button id="themeToggle" class="icon-btn" type="button" title="Chuyển giao diện sáng / tối" aria-label="Chuyển giao diện sáng / tối"></button>
-      <button id="deviceToggle" class="icon-btn" type="button" title="Xem dạng di động / máy tính" aria-label="Xem dạng di động / máy tính"></button>
+      <button id="themeToggle" class="ios-switch" type="button" role="switch" aria-checked="false" title="Giao diện tối" aria-label="Giao diện tối">
+        <span class="knob">
+          <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"></line><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"></line><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"></line></svg>
+          <svg class="ico-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+        </span>
+      </button>
     </div>
   </nav>
 
@@ -1329,7 +1340,7 @@ function exportHtml(){
   const q = function(sel){ return clone.querySelector(sel); };
   q('#appData').textContent = '\n/* DỮ LIỆU — cập nhật ' + new Date().toLocaleString('vi-VN') + ' — mỗi dòng là một bản ghi: region, old, new, note, stat */\nconst DATA = [\n' +
     rows.map(function(r){ return '  ' + JSON.stringify(r).replace(/</g, '\\u003c'); }).join(',\n') + '\n];\n';
-  ['#statRow', '#filterRow', '#results', '#locaChatMessages', '#toast', '#dataBanner', '#searchHint', '#themeToggle', '#deviceToggle', '#regionLine'].forEach(function(s){
+  ['#statRow', '#filterRow', '#results', '#locaChatMessages', '#toast', '#dataBanner', '#searchHint', '#regionLine'].forEach(function(s){
     const n = q(s); if(n) n.innerHTML = '';
   });
   q('#resultCount').textContent = '0';
@@ -1337,10 +1348,9 @@ function exportHtml(){
   q('#searchHint').setAttribute('hidden', '');
   q('#toast').className = 'toast';
   q('#searchClear').className = 'search-clear';
-  q('#appFrame').removeAttribute('class');
   q('#locaChatPanel').className = 'loca-chat-panel';
   q('#locaChatBadge').removeAttribute('style');
-  q('body').removeAttribute('class');
+  q('#themeToggle').setAttribute('aria-checked', 'false');
   clone.removeAttribute('data-theme');
   clone.querySelectorAll('img.js-logo').forEach(function(im){ im.removeAttribute('src'); });
   const html = '<!DOCTYPE html>\n' + clone.outerHTML + '\n';
@@ -1348,32 +1358,20 @@ function exportHtml(){
   toast('Đã tạo file HTML chứa ' + rows.length + ' dòng dữ liệu đang dùng.');
 }
 
-/* ---------- Giao diện sáng/tối + xem dạng di động ---------- */
-function sunIcon(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"></line><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"></line><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"></line></svg>';}
-function moonIcon(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>';}
-function desktopIcon(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"></rect><line x1="8" y1="20" x2="16" y2="20"></line><line x1="12" y1="16" x2="12" y2="20"></line></svg>';}
-function mobileIcon(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"></rect><line x1="10.5" y1="19" x2="13.5" y2="19"></line></svg>';}
-
+/* ---------- Giao diện sáng/tối ---------- */
 const THEME_KEY = 'locamind.theme';
 let isDark = (function(){
   const saved = lsGet(THEME_KEY);
   if(saved === 'dark' || saved === 'light') return saved === 'dark';
   return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
 })();
-let isMobilePreview = false;
 function applyTheme(){
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-  $('themeToggle').innerHTML = isDark ? sunIcon() : moonIcon();
-}
-function applyDevice(){
-  $('appFrame').classList.toggle('device-mobile', isMobilePreview);
-  document.body.classList.toggle('device-mobile-active', isMobilePreview);
-  $('deviceToggle').innerHTML = isMobilePreview ? desktopIcon() : mobileIcon();
+  $('themeToggle').setAttribute('aria-checked', isDark ? 'true' : 'false');
 }
 
 /* ---------- Gắn sự kiện ---------- */
 $('themeToggle').addEventListener('click', function(){ isDark = !isDark; lsSet(THEME_KEY, isDark ? 'dark' : 'light'); applyTheme(); });
-$('deviceToggle').addEventListener('click', function(){ isMobilePreview = !isMobilePreview; applyDevice(); });
 $('searchInput').addEventListener('input', function(e){ query = e.target.value; renderResults(); });
 function clearSearch(){
   query = ''; $('searchInput').value = '';
@@ -1407,7 +1405,6 @@ $('fileInput').addEventListener('change', function(e){
 $('btnHtml').addEventListener('click', exportHtml);
 
 applyTheme();
-applyDevice();
 setData(override ? override.rows : EMBEDDED);
 renderAll();
 
