@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hỗ trợ tra cứu khóm/ấp trên địa bàn tỉnh Bạc Liêu (cũ) năm 2026</title>
 <meta name="description" content="Tra cứu nhanh tên ấp/khóm cũ → mới sau sắp xếp năm 2026 trên địa bàn tỉnh Bạc Liêu (cũ).">
-<meta name="theme-color" content="#003a61">
+<meta name="theme-color" content="#800021">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="LocaMind">
@@ -17,6 +17,23 @@
 <!-- Phiên bản 2.1 — Không dùng font/CDN/thư viện ngoài: toàn bộ file chạy offline, không cần internet -->
 <style>
   :root{
+    --vtb-blue-deep:#881144;
+    --vtb-blue-deep2:#800021;
+    --vtb-blue:#881144;
+    --vtb-blue-light:#FF69B4;
+    --vtb-red:#C2185B;
+    --vtb-red-dark:#800021;
+    --bg:#FFF6F2;
+    --surface:#ffffff;
+    --surface-soft:#FFE4D8;
+    --ink:#4A0016;
+    --ink-soft:#8A4A5E;
+    --line: rgba(var(--rgb-blue),0.14);
+    --rgb-blue:136,17,68; --rgb-light:255,105,180; --rgb-red:194,24,91; --rgb-deep:128,0,33; --rgb-hero-ink:255,228,216;
+    --hero-ink:#FFE4D8; --pink-dark:#FF69B4; --moon:#800021;
+  }
+  /* Bộ màu cũ (xanh VietinBank) */
+  [data-palette="classic"]{
     --vtb-blue-deep:#003a61;
     --vtb-blue-deep2:#00263f;
     --vtb-blue:#005993;
@@ -24,20 +41,32 @@
     --vtb-red:#d71249;
     --vtb-red-dark:#a90d39;
     --bg:#f2f6f9;
-    --surface:#ffffff;
     --surface-soft:#eef4f8;
     --ink:#132943;
     --ink-soft:#5b7488;
-    --line: rgba(0,89,147,0.14);
+    --rgb-blue:0,89,147; --rgb-light:126,211,247; --rgb-red:215,18,73; --rgb-deep:0,58,97; --rgb-hero-ink:242,248,252;
+    --hero-ink:#f2f8fc; --pink-dark:#ff8aa9; --moon:#1c3d5a;
   }
   [data-theme="dark"]{
+    --bg:#1A0009;
+    --surface:#2B0714;
+    --surface-soft:#22040F;
+    --ink:#FFE4D8;
+    --ink-soft:#E0A3B6;
+    --line: rgba(var(--rgb-light),0.2);
+  }
+  [data-palette="classic"][data-theme="dark"]{
     --bg:#071826;
     --surface:#0e2436;
     --surface-soft:#0b1f2f;
     --ink:#eaf4fb;
     --ink-soft:#9ab4c8;
-    --line: rgba(126,211,247,0.2);
   }
+  .palette-pick{display:flex; gap:4px; padding:3px; border-radius:20px; background:var(--surface-soft); border:1px solid var(--line);}
+  .palette-pick button{width:24px; height:24px; border-radius:50%; border:2px solid transparent; cursor:pointer; padding:0;}
+  .palette-pick button[data-p="rose"]{background:linear-gradient(135deg,#C2185B,#800021);}
+  .palette-pick button[data-p="classic"]{background:linear-gradient(135deg,#005993,#d71249);}
+  .palette-pick button[aria-pressed="true"]{border-color:var(--ink); box-shadow:0 0 0 2px var(--surface) inset;}
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
@@ -80,21 +109,21 @@
   .ios-switch[aria-checked="true"]:active .knob{transform:translateX(14px);}
   .ios-switch .knob svg{width:15px; height:15px;}
   .ios-switch .ico-sun{color:#f5a300;}
-  .ios-switch .ico-moon{color:#1c3d5a; display:none;}
+  .ios-switch .ico-moon{color:var(--moon); display:none;}
   .ios-switch[aria-checked="true"] .ico-sun{display:none;}
   .ios-switch[aria-checked="true"] .ico-moon{display:block;}
 
   .bg-texture{
     position:fixed; inset:0; z-index:-1;
     background:
-      radial-gradient(1200px 500px at 15% -10%, rgba(215,18,73,0.08), transparent 60%),
-      radial-gradient(900px 500px at 110% 10%, rgba(0,89,147,0.12), transparent 60%),
+      radial-gradient(1200px 500px at 15% -10%, rgba(var(--rgb-red),0.08), transparent 60%),
+      radial-gradient(900px 500px at 110% 10%, rgba(var(--rgb-blue),0.12), transparent 60%),
       var(--bg);
   }
 
   header.hero{
     background: linear-gradient(135deg, var(--vtb-blue-deep) 0%, var(--vtb-blue-deep2) 100%);
-    color:#f2f8fc;
+    color:var(--hero-ink);
     padding: 40px 24px 36px;
     position:relative;
     overflow:hidden;
@@ -102,12 +131,12 @@
   header.hero::before{
     content:""; position:absolute; right:-120px; top:-120px;
     width:340px; height:340px; border-radius:50%;
-    border:1px solid rgba(126,211,247,0.22);
+    border:1px solid rgba(var(--rgb-light),0.22);
   }
   header.hero::after{
     content:""; position:absolute; right:-40px; top:-40px;
     width:220px; height:220px; border-radius:50%;
-    border:1px solid rgba(215,18,73,0.3);
+    border:1px solid rgba(var(--rgb-red),0.3);
   }
   .hero-inner{max-width:980px; margin:0 auto; position:relative; z-index:2;}
   .app-brand{display:flex; align-items:center; gap:12px; margin-bottom:18px;}
@@ -119,9 +148,9 @@
     display:inline-flex; align-items:center; gap:8px;
     font-size:12px; letter-spacing:.14em; text-transform:uppercase;
     color:var(--vtb-blue-light); font-weight:700;
-    border:1px solid rgba(126,211,247,0.35);
+    border:1px solid rgba(var(--rgb-light),0.35);
     padding:5px 12px; border-radius:999px;
-    background:rgba(126,211,247,0.08);
+    background:rgba(var(--rgb-light),0.08);
   }
   .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--vtb-red);}
   h1.title{
@@ -133,7 +162,7 @@
     letter-spacing:-0.01em;
   }
   .subtitle{
-    color:rgba(242,248,252,0.75);
+    color:rgba(var(--rgb-hero-ink),0.75);
     font-size:15px;
     max-width:620px;
     line-height:1.6;
@@ -148,14 +177,14 @@
     min-width:112px;
   }
   .stat-chip .num{font-family:'SVN-Gilroy','Helvetica Neue',Arial,sans-serif; font-size:21px; font-weight:800; color:var(--vtb-blue-light); line-height:1;}
-  .stat-chip .lbl{font-size:11px; color:rgba(242,248,252,0.62); margin-top:4px; letter-spacing:.03em;}
+  .stat-chip .lbl{font-size:11px; color:rgba(var(--rgb-hero-ink),0.62); margin-top:4px; letter-spacing:.03em;}
 
   .searchwrap{max-width:980px; margin:-24px auto 0; padding:0 24px; position:relative; z-index:5;}
   .searchbox{
     background:var(--surface);
     border:1px solid var(--line);
     border-radius:16px;
-    box-shadow: 0 18px 40px -18px rgba(0,58,97,0.35);
+    box-shadow: 0 18px 40px -18px rgba(var(--rgb-deep),0.35);
     padding:16px;
   }
   .searchbox input[type="text"]{
@@ -172,7 +201,7 @@
   }
   .searchbox input[type="text"]:focus{
     border-color:var(--vtb-blue);
-    box-shadow:0 0 0 3px rgba(0,89,147,0.16);
+    box-shadow:0 0 0 3px rgba(var(--rgb-blue),0.16);
   }
   .search-icon-wrap{position:relative;}
   .search-icon-wrap svg{position:absolute; left:14px; top:50%; transform:translateY(-50%); width:18px; height:18px; stroke:var(--ink-soft);}
@@ -211,8 +240,8 @@
   }
   .row:hover{border-color:var(--vtb-red); transform:translateY(-1px);}
   .old-name{font-size:14px; color:var(--ink-soft); font-weight:500; line-height:1.4;}
-  .old-name mark, .new-name mark{background:rgba(215,18,73,0.16); color:var(--vtb-blue-deep); padding:0 2px; border-radius:3px;}
-  [data-theme="dark"] .old-name mark, [data-theme="dark"] .new-name mark{background:rgba(215,18,73,0.35); color:var(--vtb-blue-light);}
+  .old-name mark, .new-name mark{background:rgba(var(--rgb-red),0.16); color:var(--vtb-blue-deep); padding:0 2px; border-radius:3px;}
+  [data-theme="dark"] .old-name mark, [data-theme="dark"] .new-name mark{background:rgba(var(--rgb-red),0.35); color:var(--vtb-blue-light);}
   .arrow{width:28px; height:28px; border-radius:50%; background:var(--vtb-red); color:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
   .arrow svg{width:14px; height:14px;}
   .new-name{font-size:14.5px; font-weight:800; color:var(--vtb-blue-deep); line-height:1.4;}
@@ -323,7 +352,7 @@
     border:1px solid var(--vtb-red); background:transparent; color:var(--vtb-red); font-family:inherit;
     font-size:12px; font-weight:800; padding:5px 10px; border-radius:8px; cursor:pointer;
   }
-  [data-theme="dark"] .banner button{border-color:#ff8aa9; color:#ff8aa9;}
+  [data-theme="dark"] .banner button{border-color:var(--pink-dark); color:var(--pink-dark);}
   .hint{font-size:12.5px; color:var(--ink-soft); margin:-6px 2px 14px; line-height:1.5;}
   .hint b{color:var(--ink);}
 
@@ -344,9 +373,9 @@
   }
   .chain-now{
     display:inline-flex; flex-wrap:wrap; align-items:baseline; gap:5px; margin-top:6px; padding:4px 10px;
-    border-radius:8px; background:rgba(215,18,73,.09); color:var(--vtb-red); font-size:13px; font-weight:800;
+    border-radius:8px; background:rgba(var(--rgb-red),.09); color:var(--vtb-red); font-size:13px; font-weight:800;
   }
-  [data-theme="dark"] .chain-now{background:rgba(215,18,73,.24); color:#ff8aa9;}
+  [data-theme="dark"] .chain-now{background:rgba(var(--rgb-red),.24); color:var(--pink-dark);}
   .chain-now small{font-weight:600; font-size:11px; color:var(--ink-soft);}
   .chain-warn{display:block; margin-top:5px; font-size:11px; font-weight:600; color:#a45f00; line-height:1.45;}
   [data-theme="dark"] .chain-warn{color:#ffc56b;}
@@ -402,6 +431,10 @@
     </div>
     <div class="topbar-right">
       <span class="version-badge">Phiên bản <b>2.1</b><span>by Hải Đăng</span></span>
+      <div class="palette-pick" role="group" aria-label="Bộ màu">
+        <button type="button" data-p="classic" title="Bộ màu cũ (xanh)" aria-label="Bộ màu cũ (xanh)" aria-pressed="false"></button>
+        <button type="button" data-p="rose" title="Bộ màu hồng" aria-label="Bộ màu hồng" aria-pressed="true"></button>
+      </div>
       <button id="themeToggle" class="ios-switch" type="button" role="switch" aria-checked="false" title="Giao diện tối" aria-label="Giao diện tối">
         <span class="knob">
           <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"></line><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"></line><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"></line></svg>
@@ -1118,7 +1151,7 @@ function buildXlsx(header, rows, widths){
   sheet += '</sheetData></worksheet>';
   const styles = X + '<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">' +
     '<fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Calibri"/></font></fonts>' +
-    '<fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF005993"/><bgColor indexed="64"/></patternFill></fill></fills>' +
+    '<fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF' + (palette === 'classic' ? '005993' : '881144') + '"/><bgColor indexed="64"/></patternFill></fill></fills>' +
     '<borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders>' +
     '<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>' +
     '<cellXfs count="3"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>' +
@@ -1352,6 +1385,7 @@ function exportHtml(){
   q('#locaChatBadge').removeAttribute('style');
   q('#themeToggle').setAttribute('aria-checked', 'false');
   clone.removeAttribute('data-theme');
+  clone.removeAttribute('data-palette');
   clone.querySelectorAll('img.js-logo').forEach(function(im){ im.removeAttribute('src'); });
   const html = '<!DOCTYPE html>\n' + clone.outerHTML + '\n';
   downloadBlob(new Blob([html], {type: 'text/html;charset=utf-8'}), 'tra-cuu-ap-khom-2026_v' + APP_VERSION + '_' + dateStamp() + '.html');
@@ -1369,6 +1403,19 @@ function applyTheme(){
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
   $('themeToggle').setAttribute('aria-checked', isDark ? 'true' : 'false');
 }
+
+/* ---------- Bộ màu: cũ (classic) / hồng (rose) ---------- */
+const PALETTE_KEY = 'locamind.palette';
+let palette = lsGet(PALETTE_KEY) === 'classic' ? 'classic' : 'rose';
+function applyPalette(){
+  document.documentElement.setAttribute('data-palette', palette);
+  document.querySelectorAll('.palette-pick button').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.p === palette ? 'true' : 'false'); });
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute('content', palette === 'classic' ? '#003a61' : '#800021');
+}
+document.querySelectorAll('.palette-pick button').forEach(function(b){
+  b.addEventListener('click', function(){ palette = b.dataset.p; lsSet(PALETTE_KEY, palette); applyPalette(); });
+});
 
 /* ---------- Gắn sự kiện ---------- */
 $('themeToggle').addEventListener('click', function(){ isDark = !isDark; lsSet(THEME_KEY, isDark ? 'dark' : 'light'); applyTheme(); });
@@ -1405,6 +1452,7 @@ $('fileInput').addEventListener('change', function(e){
 $('btnHtml').addEventListener('click', exportHtml);
 
 applyTheme();
+applyPalette();
 setData(override ? override.rows : EMBEDDED);
 renderAll();
 
